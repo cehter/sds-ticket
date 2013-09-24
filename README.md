@@ -1,5 +1,4 @@
-Sprachdialog-Ticketsystem
-----------------------------
+#Sprachdialog-Ticketsystem
 
 Projektarbeit mit dem Ziel ein Ticketsystem zu entwickeln, das ermöglicht den Ticketstatus via Telefon zu erfragen und eine Aufnahme zu hinterlassen. Dieses System benötigt ein Sprachdialogsystem, ein Web-Frontend sowie eine Datenbank. Über den Sprachdialog ist es möglich den Status eines Tickets abzufragen und eine Nachricht zu diesem Tickt aufzunehmen. Die Legitimation erfolgt über die Automatic Number Identification (ANI).
 Über das Web-Frontend ist es möglich neue Tickets anzulegen, Kommentare zu
@@ -9,9 +8,9 @@ Die VoiceXML Anwendung wird dynamisch erzeugt. Das bedeutet eine serversei-
 tige Skriptsprache generiert den VoiceXML Code. In diesem Projekt wurde Ruby
 on Rails verwendet.
 
-Funktion
---------
-#Sprachdialog
+#Funktion
+
+##Sprachdialog
 
 Es wird ein Rootdokument verwendet, dass die Funktionen: help, nomatch, noinput und exit global definiert. Diese können somit in jedem Voice-xml Dokument aufgerufen werden. 
 Modulübersicht:
@@ -44,15 +43,15 @@ Wert in der Tabelle Report aktualisiert.
 matik. Bevor das Programm beendet wird, wird der Benutzer gefragt ob er
 noch ein Ticket abfragen möchte.
 
-#Webinterface
+##Webinterface
 Zur besseren Visualisierung des Webinterfaces habe ich ein Screendesign erstellt. Nachdem Login wird eine Übersicht der vorhanden Tickets
 angezeigt. Klickt der Benutzer auf ein Ticket kann er das Ticket schließen, Kommentare hinzufügen und sich Recordings anhören. Die Reports können über einen eigenen Navigationspunkt angewählt werden. Hier besteht die Auswahl zwischen Mengenreport und Qualitätsreport. Angezeigt werden die Anrufen und die Stunden für ein gewähltes Datum. Ob die Darstellung als Grafik oder Tabelle erfolgt steht noch nicht fest.
+Mockups der Funktionalität.
+![Mockup Teil1](http://cla.udia-ceh.de/images/mockup_sds_teil1.png)
+![Mockup Teil2](http://cla.udia-ceh.de/images/mockup_sds_teil2.png)
 
-![V1](http://cla.udia-ceh.de/pic/mockup_sds_teil2.png)
 
-
-Installation
--------------
+#Installation
 
 Ablauf der Installation:
 * Ruby installieren
