@@ -1,0 +1,20 @@
+;GSL 2.0
+
+Zahlen:public (Ziffern:z){<pinEingabe $z>}
+
+Ziffern(Ziffer:z1 Ziffer:z2 Ziffer:z3 Ziffer:z4){return(strcat(strcat($z1 $z2) strcat($z3 $z4)))}
+
+Ziffer [
+	    null		{return(0)}
+        eins      {return (1)}
+        [zwei zwo]{return (2)}
+        drei      {return (3)}
+        vier      {return (4)}
+        fuenf      {return (5)}
+        sechs     {return (6)}
+        sieben    {return (7)}
+        acht      {return (8)}
+        neun      {return (9)}
+]
+
+

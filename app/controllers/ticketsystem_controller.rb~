@@ -1,0 +1,160 @@
+class TicketsystemController < ApplicationController
+skip_before_filter :verify_authenticity_token
+    
+    
+#-------------Webseite--------------#    
+    def login
+        render :layout => false, :action => "ticketsystem/html/login.html.erb" 
+    end
+    def check
+        if params[:check][:rolle] == "admin" && params[:check][:ani] == "4321"
+           session[:admin] == true
+           render :layout => true, :text => "Erfolgreich angemeldet"
+        else
+            reset_session
+            render :layout => false, :template => "ticketsystem/html/login.html.erb"
+        end 
+    end    
+    def index
+        render :action => "ticketsystem/html/index.html.erb"        
+    end
+    def show 
+        @ticket = Ticket.find(params[:id])
+        @ticket.update_attributes(params[:ticket])
+        render :action => 'ticketsystem/html/show.html.erb'
+    end
+    def new
+        t = Ticket.find(:last, :order=>:ticketNumber)
+        @newNumber = t.ticketNumber + 1
+        @admin = User.find(:first, :conditions => {:rolle => "Admin"})
+        @newTime = Time.now.strftime('%d.%m.%Y')        
+       render :action => 'ticketsystem/html/new.html.erb'
+    end
+    def create
+        @ticket = Ticket.new(params[:ticket])
+        if @ticket.save
+            redirect_to :action => "index"
+        else
+            render :action => "new"
+        end
+    end
+    def delete
+        @ticket = Ticket.find(params[:id])
+        
+        Record.find_each(:conditions=>{:ticket_id => @ticket.id}) do |rec|
+        rec.destroy
+        end
+        @ticket.destroy
+
+        redirect_to :action => "index"
+    end
+    
+    def report
+       render :action => 'ticketsystem/html/report.html.erb'
+    end
+    
+    def reportErgebniss
+        @start_date = Date.civil(params[:range][:"start_date(1i)"].to_i,params[:range][:"start_date(2i)"].to_i,params[:range][:"start_date(3i)"].to_i).to_date
+        @end_date = @start_date + 1.day
+        @reports = Report.count(:all, :conditions => ["created_at between ? and ?", @start_date, @end_date])  
+        
+        if @reports == 0        
+                  render :layout => true,  :text =>"Für diesen Tag liegen keine Daten vor."
+        else    
+            if params[:menge].eql?('Mengenreport') 
+                       render :action => 'ticketsystem/html/reportMenge.html.erb'
+            else
+                       render :action => 'ticketsystem/html/reportQuali.html.erb'
+            end
+        end
+    end
+
+    def uploadFile
+        post = DataFile.save(params[:upload])
+        render :text => "File has been uploaded successfully"
+    end
+    
+#-------------Sprachdialog-------------------#        
+   def root 
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/root.vxml'           
+   end
+   def start
+        @user = User.find(:all)
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/start.vxml'   
+   end 
+   def pinEingabe
+
+        $getAni = params[:getAni]        
+        headers['Content-Type'] = 'text/xml'
+        @checkAni = User.count(:all, :conditions => {:ani, $getAni})
+        if @checkAni == 1
+            @user = User.find(:first, :conditions => {:ani => $getAni})      
+            Report.create(:user_id => @user.id)
+        end
+        render :file => 'ticketsystem/pinEingabe.vxml'
+    end
+    def pinCheck
+        @user = User.find(:first, :conditions => {:ani => $getAni})
+        $getPin = params[:getPin]
+
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/pinCheck.vxml'
+    end
+    def ticketEingabe
+        @user = User.find(:first, :conditions => {:ani => $getAni})
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/ticketEingabe.vxml'
+    end
+    def ticketCheck
+        getTicket = params[:getTicket]
+        @ticketCheck = Ticket.count(:all, :conditions => {:ticketNumber, getTicket})
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/ticketCheck.vxml'
+    end
+    def nachricht
+        getTicket = params[:getTicket]
+        report = Report.find(:last)        
+        count = report.abfrageAnzahl ||= 0
+        count += 1
+        report.update_attributes(:abfrageAnzahl => count)
+        $nachricht = Ticket.find(:first, :conditions => 
+                                                    {:ticketNumber => getTicket})
+                                                          
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/nachricht.vxml'
+    end
+    def ende
+        @user = User.find(:first, :conditions => {:ani => $getAni})
+        if !params[:myrecording].nil?
+        @getRecord = DataFile.save(params[:myrecording])
+        Record.create(:ticket_id => $nachricht.id, :user_id => @user.id, 
+                      :gehoert => false, :link => @getRecord)
+        report = Report.find(:last)        
+        count = report.recordAnzahl ||= 0
+        count += 1
+        report.update_attributes(:recordAnzahl => count)
+        end
+
+       
+        headers['Content-Type'] = 'text/xml'
+        render :file => 'ticketsystem/ende.vxml'
+    end
+
+    def grammarNummern
+        render :file => 'ticketsystem/grammars/nummern.gsl'   
+    end
+    def grammarEntscheidung
+        render :file => 'ticketsystem/grammars/entscheidung.gsl'   
+    end
+    def grammarEnde
+        render :file => 'ticketsystem/grammars/ende.gsl'   
+    end
+    def grammarExit
+        render :file => 'ticketsystem/grammars/exit.gsl'   
+    end 
+
+
+end
+

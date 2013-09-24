@@ -1,0 +1,16 @@
+;GSL 2.0
+
+Zahlen:public (Ziffer:z1){<eingabe $z1>}
+
+Ziffer [
+	    null	  {return(0)}
+        eins      {return (1)}
+        [zwei zwo]{return (2)}
+        drei      {return (3)}
+        vier      {return (4)}
+        fuenf      {return (5)}
+        sechs     {return (6)}
+        sieben    {return (7)}
+        acht      {return (8)}
+        neun      {return (9)}
+]

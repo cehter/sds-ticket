@@ -1,0 +1,50 @@
+<h3>Neues Ticket erstellen</h3>
+
+<% form_for :ticket, :url => {:action => "create"} do |f| %>
+<div class="detailsLeft">
+<table >
+    <tr>
+        <td><%= f.label :ticketNumber, "Ticketnmmer:"%></td>
+        <td><%=@newNumber%></td>
+        <%= f.hidden_field :ticketNumber, :value => @newNumber%>
+    </tr>
+    <tr>
+        <td><%= f.label :user_id, "Benutzer:" %></td>
+        <td><%= @admin.vorname %> <%= @admin.nachname %></td>
+        <%= f.hidden_field :user_id, :value => @admin.id %>
+    </tr>
+        <td><label for="newTicket_date">Datum: </label></td>
+        <td><%= @newTime %></td>
+    <tr>
+        <td> <%= f.label :status, "Status:" %></td>
+        <td>offen</td>
+          <%= f.hidden_field :status, :value => "offen" %>
+    </tr>
+</table>
+</div>
+
+<div class="newMiddel">
+<p><%=f.label :subject, "Betreff: " %>
+<%= f.text_field :subject, :size=>20 %></p></br>
+<div class="newLeft">
+<%= f.label :prio, "Priorität" %></br>
+<%= f.radio_button :prio, "gering" %> gering</br>
+<%= f.radio_button :prio, "mittel" %> mittel</br>
+<%= f.radio_button :prio, "hoch" %> hoch
+</div>
+<div class="newLeft">
+  <%= f.label :bereich, "Bereich" %></br>
+  <%= f.select :bereich, ["Userinterface", "Sprachdialog", "Adminbereich"], :prompt => "Bitte wählen"%>
+  </div>
+</div>
+
+<div class="newLeft">
+<%= f.label :inhalt, "Inhalt:" %><br>
+<%= f.text_area :inhalt, :size => "24x8" %>
+</div>
+
+<div class="clear">
+  <%= submit_tag "speichern" %>
+  <% end %>
+</div>
+

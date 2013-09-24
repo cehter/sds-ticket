@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE" application="/ticketsystem/root">
+<form id="ticketEingabe">
+<var name="getTicket"/>
+<block>
+Guten Tag
+    <% if @user.geschlecht == "m" %>
+        <prompt> Herr </prompt>
+    <%else%>
+        <prompt> Frau </prompt>
+    <%end%>
+<prompt><%= @user.nachname  %> </prompt>
+</block>
+<field name="number">
+    <grammar src="builtin:dtmf/digits?length=4" mode="dtmf"/>
+    <grammar  src="/ticketsystem/grammarNummern" type="application/x-nuance-gsl"/>
+    <prompt>Bitte nennen Sie uns die Nummer des Tickets dessen Status Sie abfragen moechten</prompt>    <filled>
+    <if cond="application.lastresult$.inputmode  == 'voice'">
+        <assign name="getTicket" expr="application.lastresult$.interpretation.number"/>
+    <else/>
+            <assign name="getTicket" expr="number"/>
+    </if>
+    </filled>
+</field>
+<field name="janein">
+    <grammar  src="/ticketsystem/grammarEntscheidung" type="application/x-nuance-gsl"/>
+    <prompt>Habe ich Sie richtig verstanden. Sie moechten den Status des Tickets: <value expr="getTicket"/> abfragen?</prompt>
+    <filled>
+    <if cond="janein== 'ja'">
+	    <submit next="http://192.168.1.150:3000/ticketsystem/ticketCheck" namelist="getTicket getAni"/>
+	<elseif cond="janein == 'nein'"/>
+	    <prompt>Dann habe ich Sie leider falsch verstanden.</prompt>
+        <clear namelist="number janein"/>
+	</if>
+</filled>
+</field>
+</form>
+
+<!-- Help, noinput and nochmatch -->
+<help>
+  Um den Status eines Tickets abfragen zu können benötigen sie die vierstellige Ticketnummer. Wissen Sie die Ticketnummer nicht, wenden Sie sich an Ihren Ansprechpartner. 
+ </help>		
+</vxml>
+
+
+
+

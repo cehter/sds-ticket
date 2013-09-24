@@ -1,0 +1,16 @@
+class CreateTickets < ActiveRecord::Migration
+  def self.up
+    create_table :tickets do |t|
+      t.string :vorname
+      t.string :nachname
+      t.string :geschlecht
+      t.string :rolle
+    end
+    Product.create(:name => "iPod nano 3G", :price => 149.00)
+    Product.create(:name => "Mac Book", :price => 1100.00)
+  end
+
+  def self.down
+    drop_table :products
+  end
+end

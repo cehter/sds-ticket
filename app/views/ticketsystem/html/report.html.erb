@@ -1,0 +1,11 @@
+<h3>Report erstellen</h3>
+
+<% form_for :report, :url=>{:action => "reportErgebniss"} do |f|%>
+<%= f.label :datechoice, "Datum wählen:" %> <%= date_select('range', 'start_date', :order => [:month, :day, :year])%>
+
+<%= submit_tag "Mengenreport", :name => 'menge'%>
+<%= submit_tag "Qualitätsreport", :name => 'quali'%>
+<%end%>
+
+
+

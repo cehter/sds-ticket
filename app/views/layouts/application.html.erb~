@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;
+  charset=utf-8" />
+  <title>Ticketverwaltung Double-Trouble</title>
+  <%= stylesheet_link_tag 'global' %>
+
+</head>
+
+<body>
+
+
+<div id="header">
+      <h1>Ticketsystem Double-Trouble</h1>
+</div>
+<div id="menu">
+<%    @targets = Hash["Übersicht"=>"/ticketsystem/index", "NeuesTicket"=>"/ticketsystem/new", "Report"=>"/ticketsystem/report"] %>
+   <ul>
+      <% @targets.sort.each do |key, value| %>
+      <% if request.request_uri == value %>
+  <li>
+    <%= link_to key, { :controller => value }, :class => 'active'%>
+  </li>
+    <%else%>
+    <li>
+    <%= link_to key, { :controller => value} %>
+    </li>
+    <%end%>
+<% end %>
+</div>
+<div id="main">
+      <%= yield %>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE" application="root">
+<property name="bargein" value="false"/> 
+<form id ="willkommen">   
+	<block>
+    <prompt>Willkommen zum Ticket-System Double-Trouble.</prompt>							
+    <goto next="#ani"/>    
+		</block>
+</form>
+
+<form id ="ani">
+<block name="my_phone_nr">
+    <assign name="getAni" expr="(session.connection.local.uri).toString()" />
+</block>
+<block>
+    
+	<submit next="http://192.168.1.150:3000/ticketsystem/pinEingabe" namelist="getAni startTime"/>
+</block>
+</form>
+
+</vxml>

@@ -1,0 +1,6 @@
+;GSL 2.0
+
+Entscheidung:public  [
+   [ja jo ok jupp joa] {<janein "ja">}
+   [nein nö nope ne]  {<janein "nein">}
+]

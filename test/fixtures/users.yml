@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ani: 1
+  vorname: MyString
+  nachname: MyString
+  rolle: MyString
+
+two:
+  ani: 1
+  vorname: MyString
+  nachname: MyString
+  rolle: MyString

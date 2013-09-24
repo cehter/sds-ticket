@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE" application="/ticketsystem/root">
+<property name="application.label" value="record" /> 
+
+
+<form id="nachricht">
+<block>
+<prompt>Ticketnummer: <%= $nachricht.ticketNumber %>.</prompt>
+<prompt>Betreff: <%= $nachricht.subject %>.</prompt>
+<prompt>Status: <%= $nachricht.status %>.</prompt>
+<prompt>Prioritaet: <%= $nachricht.prio %>.</prompt>
+<prompt>Erstellt am: <%= $nachricht.created_at %>.</prompt>
+<prompt>Erstellt von: <%= $nachricht.user.vorname %> <%= $nachricht.user.nachname %> </prompt>
+</block>
+
+    <field name="janein">
+    <grammar  src="/ticketsystem/grammarEntscheidung" type="application/x-nuance-gsl"/>
+        <prompt>Moechten Sie eine Nachricht hinterlassen? </prompt>
+        <filled>
+            <if cond ="janein == 'ja'">
+                <goto next="#aufnahme"/>
+            <elseif cond="janein =='nein'"/>
+	            <submit next="/ticketsystem/ende"/>
+            </if>
+       </filled>
+    </field>
+</form> 
+<form id="aufnahme">
+<var name="myrecording"/>
+    <record name="rec" beep="true" dtmfterm="true" finalsilence="1500ms" maxtime="20000ms" modal="false">
+      <prompt>Bitte sprechen Sie nach dem Piep.</prompt>
+      <filled>
+          <assign name="myrecording" expr="rec"/>
+      </filled>    
+    </record>
+    <block>
+      <prompt bargein="true">Ihre Aufnahme: <value expr="myrecording" />.</prompt>
+	  <submit next="/ticketsystem/ende" enctype="multipart/form-data"
+        method="post" namelist="myrecording getTicket"/>
+    </block>
+
+</form>
+</vxml>
+
+
+
+

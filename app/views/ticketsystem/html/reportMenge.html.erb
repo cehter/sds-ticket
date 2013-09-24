@@ -1,0 +1,27 @@
+<h3>Mengenreport</h3>
+
+
+
+<table width="100%" cellspacing="2" cellpadding="5" rules="all">
+    <tr>
+        <th>Ani</th>
+        <th>Start</th>
+        <th>Ende</th>
+        <th>Dauer</th>
+    </tr>
+    
+
+   <% Report.find(:all, :conditions => ["created_at between ? and ?", @start_date, @end_date]).each do |rep|%>
+  <tr class="<%=cycle('rowa','rowb')%>">
+  <% dauer = rep.updated_at - rep.created_at %>
+  <%if dauer != 0%>
+        <td><%= rep.user.ani%></td>
+        <td><%= rep.created_at.strftime('%d.%m.%y - %H:%M:%S')+" Uhr"%></td>
+        <td><%= rep.updated_at.strftime('%d.%m.%y - %H:%M:%S')+" Uhr" %></td>
+        <td><%= dauer%> s</td>
+  </tr>
+    <%end%>
+    <%end%>
+</table>
+
+

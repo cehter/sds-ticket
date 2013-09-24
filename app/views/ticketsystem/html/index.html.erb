@@ -1,0 +1,35 @@
+<h3>Ticketübersicht</h3>
+
+<table width="100%" cellspacing="2" cellpadding="5" rules="all">
+    <tr>
+        <th>Ticketnummer</th>
+        <th>Betreff</th>
+        <th>Status</th>
+        <th>Priorität</th>
+        <th>Erstellt von</th>
+        <th>Letzte Änderung</th>
+        <th>Aufnahme</th>
+    </tr>
+    
+   <% Ticket.all.each do |ticket| %>
+   <% rec = Record.count(:all, :conditions=>{:ticket_id => ticket.id}) %>
+  <tr class="<%=cycle('rowa','rowb')%>">
+        <td><%= ticket.ticketNumber%></td>
+        <td><%= ticket.subject %></td>
+        <td><%= ticket.status %></td>
+        <td><%= ticket.prio %></td>
+        <td><%= ticket.user.vorname%> <%= ticket.user.nachname%></td>
+        <td><%= ticket.updated_at.strftime('%d.%m.%y - %H:%M')+"h" %></td>
+        <% if rec == 0 %>
+        <td>0</td>
+        <%else%>
+        <td><%= rec %></td>
+        <%end%> 
+        <td><%= link_to "Zeigen", :action => "show", :id => ticket.id %></td>
+        <td><%= link_to "Löschen", :action =>"delete", :id => ticket.id, :confirm => 'Are you sure?' %></td>
+     </tr>
+     
+    <%end%>
+</table>
+
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE" application="/ticketsystem/root">
+
+<form id="pin">
+<block>
+    <% if @checkAni !=1 %>
+        <prompt>Ihre ANI ist bei uns nicht hinterlegt. Bitte wenden Sie sich an Ihren Administrator. Auf Wiederhören</prompt>
+        <exit/>
+    <%end %>
+</block>
+<field name="number"  type="digits?length=4">
+    <grammar src="builtin:dtmf/digits?length=4" mode="dtmf"/>
+    <grammar  src="/ticketsystem/grammarNummern" type="application/x-nuance-gsl"/>
+    <prompt>Bitte geben Sie Ihren Pin ein</prompt>
+    <filled>
+    <if cond="application.lastresult$.inputmode  == 'voice'">
+        <assign name="getPin" expr="application.lastresult$.interpretation.number"/>
+    <else/>
+            <assign name="getPin" expr="number"/>
+    </if>
+	    <submit next="/ticketsystem/pinCheck" namelist="getPin"/>
+    </filled>
+</field>
+</form>
+
+<!-- Help, noinput and nochmatch -->
+<help>
+  Um den Status eines Tickets abfragen zu koennen benoetigen sie die vierstellige Ticketnummer. Wissen Sie die Ticketnummer nicht, wenden Sie sich an Ihren Ansprechpartner. 
+ </help>	
+</vxml>
+
+
+
+

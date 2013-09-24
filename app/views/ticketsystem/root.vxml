@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE">
+
+  <var name="getAni" expr="undefined"/>           
+  <var name="getPin" expr="undefined"/>
+  <var name ="getTicket" expr="undefined"/>
+  <var name="startTime" expr="new Date()"/>
+
+<link>
+    <grammar>
+    <![CDATA[
+    Doof:public [ hilfe {<HELP HELP>}
+    ] ]]>
+    </grammar>
+</link>
+<link next="/ticketsystem/ende">
+    <grammar  src="/ticketsystem/grammarExit" type="application/x-nuance-gsl"/>
+</link>
+
+<!-- Help, noinput and nochmatch -->
+<help>
+Mit Double-Trouble haben Sie die Moeglichkeit den Status eines Tickets abzufragen.
+ </help>		
+	<noinput count="1">
+      Ich konnte Sie leider nicht hoeren. Bitte versuchen Sie es erneut.
+	    <reprompt/>
+	</noinput>
+	<noinput count="2">
+	Ich konnte nichts verstehen. Bitte versuchen Sie es zu einem spaeteren Zeitpunkt erneut.
+		<exit/>
+	</noinput>
+	<nomatch count="1">
+		Ich konnte Ihre Eingabe leider nicht verstehen. Bitte sprechen Sie etwas deutliche.
+		<reprompt/>
+	</nomatch>
+	<nomatch count="2">
+	Leider konnte Ich Sie erneut nicht verstehen. Versuchen Sie es spaeter noch einmal.
+	    <exit/>
+	</nomatch>
+
+</vxml>
+

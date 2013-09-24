@@ -1,0 +1,7 @@
+;GSL 2.0
+
+Ende:public  [
+   [ticket (neues ticket) neu] {<ende "Ticket">}
+   [ende beenden]  {<ende "Ende">}
+]
+

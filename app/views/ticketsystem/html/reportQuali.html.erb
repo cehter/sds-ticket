@@ -1,0 +1,25 @@
+<h3>Qualitätsreport</h3>
+
+<table width="100%" cellspacing="2" cellpadding="5" rules="all">
+    <tr>
+        <th>Ani</th>
+        <th>Datum</th>
+        <th>Uhrzeit </th>
+        <th>Abgefragte Tickets</th>
+        <th>Hinterlasses Nachrichten</th>
+    </tr>
+    
+   <% Report.find(:all, :conditions => ["created_at between ? and ?", @start_date, @end_date]).each do |rep|%>
+        <%if !rep.abfrageAnzahl.nil? %>
+  <tr class="<%=cycle('rowa','rowb')%>">
+        <td><%= rep.user.ani%></td>
+        <td><%= rep.created_at.strftime('%d.%m.%y')%></td>
+        <td><%= rep.created_at.strftime('%H:%M:%S') + "Uhr" %></td>
+        <td><%= rep.abfrageAnzahl%></td>
+        <td><%= rep.recordAnzahl %></td>
+        <%end%>
+  </tr>
+     
+    <%end%>
+</table>
+

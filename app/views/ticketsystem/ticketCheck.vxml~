@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE" application="/ticketsystem/root">
+<property name="application.label" value="record" /> 
+
+<form>
+
+<block>
+<% if @ticketCheck == 0 %>
+<prompt>Das von Ihnen genannte Ticket ist bei uns nicht hinterlegt. </prompt>
+<prompt>Sollten Sie ihre korrekte Ticketnummer nicht wissen, wenden Sie sich bitte an Ihren Ansprechpartner. </prompt>
+<prompt>Haben Sie sich geirrt, leiten wir Sie nun noch einmal zur Ticketeingabe weiter.</prompt>
+<submit next="/ticketsystem/ticketEingabe" namelist="getAni"/>  
+<%else%>
+<submit next="http://192.168.1.150:3000/ticketsystem/nachricht" namelist="getTicket"/>  
+<%end%>
+
+</block>
+</form>
+<help>
+  Um den Status eines Tickets abfragen zu können benötigen sie die vierstellige Ticketnummer. Wissen Sie die Ticketnummer nicht, wenden Sie sich an Ihren Ansprechpartner. 
+ </help>	
+</vxml>
+
+
+
+

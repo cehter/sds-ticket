@@ -1,0 +1,52 @@
+create table tickets(
+ticket_id int(4),
+erstellt_id int(3),
+geschlossen_id int(3),
+subject varchar(20),
+inhalt varchar(300),
+datum_erstellt datetime,
+datum_aenderung datetime,
+bereich char(20),
+status char(10),
+prio char (10))
+DEFAULT CHARSET=utf8;
+
+
+ alter table tickets add constraint primary key(ticket_id);
+ 
+ 
+INSERT INTO
+    tickets(ticket_id, erstellt_id, geschlossen_id, subject, inhalt, datum_erstellt, datum_aenderung, bereich, status, prio)
+VALUES
+    (1000,
+     123,
+     NULL,
+     "test",
+     "Hiermit teste ich wie man Datensätze in MySQL einfügt",
+    NOW(),
+    NULL,
+    "admin",
+    "offen",
+    "hoch");
+
+
+create table user(
+user_id int(3),
+vorname varchar(20),
+nachname varchar(20),
+geschlecht varchar(1),
+rolle varchar(20))
+DEFAULT CHARSET=utf8;
+
+
+ alter table user add constraint primary key(user_id);
+ 
+ 
+INSERT INTO
+    user(user_id, vorname, nachname, geschlecht, rolle)
+VALUES
+    (124,
+     "hans",
+     "Meier",
+     "m",
+     "admin");

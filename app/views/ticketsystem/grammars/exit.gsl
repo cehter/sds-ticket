@@ -1,0 +1,5 @@
+;GSL 2.0
+
+Exit:public[
+    [beenden abbrechen aufhoeren raus ende (neues ticket) (neue abfrage)]
+]

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vxml xmlns="http://www.w3.org/2001/vxml" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.w3.org/2001/vxml 
+   http://www.w3.org/TR/voicexml21/vxml.xsd"
+   version="2.1" xml:lang="de-DE">
+<link>
+    <grammar>
+    <![CDATA[
+    Doof:public [ hilfe {<HELP HELP>}
+    ] ]]>
+    </grammar>
+</link>
+
+<form id="pin">
+<prompt>Ihre Ani lautet <%= @ani %>
+<field name="PinEingabe">
+   <!--<grammar src="grammars/Zahlen.gsl#Zahlen" />-->
+    <grammar src="builtin:dtmf/digits?length=4" mode="dtmf"/>
+    <prompt> Bitte geben Sie Ihren Pin ein</prompt>
+</field>
+	<submit next="http://192.168.1.150:3000/ticketsystem/pinCheck" namelist="PinEingabe"/>
+</form>
+
+<help>
+    Über das Ticket-System Double-Trouble können Sie den Status Ihres Tickets abfragen. Dazu benötigen Sie Ihren PIN und die Ticketnummer die sie Abfragen möchten.
+ </help>		
+	<noinput count="1">
+	Ich konnte Sie leider nicht hören. Bitte sprechen Sie etwas lauter oder verwenden Sie die Tasten Ihres Telefons
+	    <reprompt/>
+	</noinput>
+	<noinput count="2">
+	Ich konnte nichts verstehen. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.
+		<exit/>
+	</noinput>
+	<nomatch count="1">
+		Ich konnte Ihre Eingabe leider nicht verstehen. Bitte sprechen Sie etwas deutliche oder verwenden Sie die Tasten Ihres Telefons.
+		<reprompt/>
+	</nomatch>
+	<nomatch count="2">
+	Leider konnte Ich die Ticketnummer erneut nicht verstehen. Versuchen Sie es später noch einmal.
+	    <exit/>
+	</nomatch>
+
+</vxml>
+
+
+
+

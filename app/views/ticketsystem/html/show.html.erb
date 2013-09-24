@@ -1,0 +1,64 @@
+<h3>Ticket: <%= @ticket.ticketNumber %></h3>    
+<div class="detailsLeft">
+<table>
+<tr>
+    <td>Betreff:</td>
+    <td><%= @ticket.subject %></td>
+</tr>
+<tr>
+    <td>Bereich:</td>
+    <td><%= @ticket.bereich %></td>
+</tr>
+<tr>
+    <td>Priorität:</td>
+    <td><%= @ticket.prio %></td>
+</tr>
+<tr>
+    <td>Benutzer:</td>
+    <td><%= @ticket.user.vorname %> <%= @ticket.user.nachname%></td>
+</tr>
+<tr>
+    <td>Erstellt:</td>
+    <td><%= @ticket.created_at.strftime('%d.%m.%Y') %></td>
+</tr>
+<tr>
+    <td>Letzte Änderung:</td>
+    <td><%= @ticket.updated_at.strftime('%d.%m.%Y') %></td>
+</tr>
+<tr>
+    <% form_for :ticket do |t|%>
+    <td><%= t.label :status, "Status" %></td>
+    <td><% if :status == "offen"%>
+            <%= t.select :status, ["offen", "geschlossen"]%>
+        <% else %>
+            <%= t.select :status, ["geschlossen", "offen"]%>
+        <%end%>
+    </td>
+
+</tr>
+<tr>
+    <td></td>
+    <td><%= t.submit "Update" %></td>
+        <%end%>
+</tr>
+</table>
+</div>
+Inhalt: 
+<div class="detailsText">
+<%= @ticket.inhalt %>
+</div></br>
+
+Aufnahme:
+
+<div class="detailsText">
+<% Record.find_each(:conditions=>{:ticket_id,  @ticket.id}) do |rec| %>
+<%= rec.user.nachname + rec.created_at.strftime('%d-%m-%y-%S%M')%><br>
+<% file_path = request.url.split(request.request_uri) + rec.link.split("public")%>
+<embed autostart="false" width="140" height="40" CONTROLS="PlayOnlyButton" src=<%= file_path%>>
+<br>
+<%end%>
+</div>
+
+
+
+<div class="clear"> </div>
