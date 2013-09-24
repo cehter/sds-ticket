@@ -11,7 +11,7 @@ on Rails verwendet.
 
 Funktion
 --------
-==Sprachdialog
+#Sprachdialog
 
 Es wird ein Rootdokument verwendet, dass die Funktionen: help, nomatch, noinput und exit global definiert. Diese können somit in jedem Voice-xml Dokument aufgerufen werden. 
 Modulübersicht:
@@ -44,11 +44,11 @@ Wert in der Tabelle Report aktualisiert.
 matik. Bevor das Programm beendet wird, wird der Benutzer gefragt ob er
 noch ein Ticket abfragen möchte.
 
-==Webinterface
+#Webinterface
 Zur besseren Visualisierung des Webinterfaces habe ich ein Screendesign erstellt. Nachdem Login wird eine Übersicht der vorhanden Tickets
 angezeigt. Klickt der Benutzer auf ein Ticket kann er das Ticket schließen, Kommentare hinzufügen und sich Recordings anhören. Die Reports können über einen eigenen Navigationspunkt angewählt werden. Hier besteht die Auswahl zwischen Mengenreport und Qualitätsreport. Angezeigt werden die Anrufen und die Stunden für ein gewähltes Datum. Ob die Darstellung als Grafik oder Tabelle erfolgt steht noch nicht fest.
 
-![V1](http://documentup.com/images/v1.png)
+![V1](http://cla.udia-ceh.de/pic/mockup_sds_teil2.png)
 
 
 Installation
